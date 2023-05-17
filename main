@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <stdlib.h>                     // gerekli kütüphaneler
+#include <conio.h>
+#include <unistd.h>
+#include <time.h>
+
+int bakiye = 1000;
+int menu()
+{
+    system("cls");                      // sistemi başlarken temizliyor
+    printf("kullanilabilir bakiye : %d\n\n",&bakiye);
+    int secim;
+    printf("\n\t uygulama \n");           // 1 'den 5 'e kadar sayıların işlemlerini yazdırdık
+    printf("\t1 - para cek\n");
+    printf("\t2 - para yatir \n");
+    printf("\t3 - fatura ode \n");
+    printf("\t4 - havaleEFT \n");
+    printf("\t5 - cikis \n");
+    scanf("%d",&secim);                  // kullanıcıdan veri girişi aldık
+    return secim;                        //
+}
+void paraCek()                           // paraCek adlı fonksiyonu oluşturduk
+{
+    int miktar ;                        // miktar değişkeni atadık
+    printf("miktar: "); scanf("%d",&miktar);        // kullanıcıya miktarı belirlemesini sağladık
+    printf("isleminiz gerceklestiriliyor\n"); sleep(2);
+    if (bakiye < miktar)                        // koşul ile miktarın bakiyeden küçük olduğunu söyledik
+    {
+        printf("yetersiz bakiye\n");
+    }
+    else
+    {
+        bakiye -= miktar;                   // bakiyemizden miktarı düşücez
+        printf("para cekme işlemi başarılı\n"); sleep(2);
+        printf("paranızı almayı unutmayın\n");   sleep(2);
+    }
+    printf("ana menuye yonlendiriliyorsunuz\n"); sleep(2);
+}
+
+
+void paraYatir()                           // paraYatır adlı fonksiyonu oluşturduk
+{
+    int miktar ;                                // miktar değişkeni atadık
+    printf("yatiracaginiz miktar : "); scanf("%d",&miktar);        // kullanıcıya miktarı belirlemesini sağladık
+    printf("islem gerceklestiriliyor\n\n"); sleep(2);
+
+    bakiye += miktar;                   //  miktarı bakiyeye ekliyoruz
+    printf("para yatirma islemi basarili\n\n"); sleep(2);
+    printf("ana menuye yonlendiriliyorsunuz\n"); sleep(2);
+}
+
+
+
+void faturaOde()                              // faturaOde adlı fonksiyonu oluşturduk
+{
+    int miktar,secim,numara ;
+                                            // 1 'den 4 'e kadar sayıların işlemlerini yazdırdık
+    printf("1 - elektrik\n");
+    printf("2 - su \n");
+    printf("3 - dogalgaz \n");
+    printf("4 - telefon \n");
+    scanf("%d",&secim);                     // kullanıcıdan 1 ile 4 arası bir seçim yapmasını istedik
+    if(secim <1 || secim >4)
+    {
+        printf("hatali giris emmioglu");
+    }
+    else
+    {
+        printf("fatura  no:"); scanf("%d",&numara);  sleep(2);           // kullanıcıdan veri girişi aldık
+        miktar = rand() %100 +20;                               // miktarı 20 ile 120 arası belirledik
+        printf("S... Y...... kisisine ait fatura %d\n",&numara);
+        printf("1 - odemeyi kabul ediyorum\n"); scanf("%d",&secim); sleep(2);
+        if ( secim !=1)                                         // secimin bir olmadıgı durumlarda işlem iptal edilir dedik
+        {
+            printf("islem iptal edildi \n");
+        }
+        else
+        {
+            bakiye -= miktar;                                   //  bakiyemizden miktarı dusucez
+            printf("fatura odeme basari ile gerceklesti"); sleep(2);
+        }
+    }
+    printf("ana menuye donuluyor");
+}
+
+
+void havaleEFT()                           // paraCek adlı fonksiyonu oluşturduk
+{
+    int miktar,iban ;                                             // miktar ve iban değişkenini atadık
+    printf("havale icin iban no"); scanf("%d",&iban);                   // kullanıcıya miktarı belirlemesini sağladık
+    printf(" havale yapacaginiz miktar"); scanf("%d",&miktar);
+    if (bakiye < miktar)
+    {
+        printf("yetersiz bakiye");
+    }
+    else
+    {
+        bakiye -= miktar;                         // bakiemizden miktarı düşücez
+        printf(" işleminiz başarılı"); sleep(2);
+    }
+    printf("ana menuye yonlendiriliyorsunuz");sleep(2);
+}
+
+
+int main()
+{
+
+    bakiye = 1000;             // bakiyenin 100 ve 1000 arasında olacagını belirttik
+    int secim;
+    while(1)                                // while dönügsünü 1 dedik
+    {
+         secim = menu();
+         switch(secim)                      // swicth case kullandık
+         {
+             case 1: paraCek(); break;
+             case 2: paraYatir(); break;    // caselerin ne işe yaradığını yazdık
+             case 3: faturaOde(); break;
+             case 4: havaleEFT(); break;
+             case 5: printf("kartinizi almayi unutmayın...\n"); return 0;
+             ;;
+              default : printf("hatali girdin gardas");
+         }
+    }
+}
